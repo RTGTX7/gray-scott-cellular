@@ -194,20 +194,5 @@ int main() {
         }
     }
 
-    // Iterate through each unique time point
-    // for (double time : uniqueTimes) {
-
-    //     // Process entries for the current time
-    //     for (const auto& entry : entries) {
-    //         if (entry.time == time) {
-    //             cv::Vec3b color = colorMap[entry.data];
-    //             image.at<cv::Vec3b>(entry.model_position.second, entry.model_position.first) = color;
-    //         }
-    //     }
-
-    //     cv::imshow("Simulation", image);
-    //     cv::waitKey(1000); // Wait for 1 second
-    // }
-
     return 0;
 }
