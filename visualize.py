@@ -7,8 +7,8 @@ import sys
 import time
 
 # Load the CSV data
-file_path = 'grid_log.csv'
-data = pd.read_csv(file_path, delimiter=';')
+file_path = 'grid_log_SIR.csv'
+data = pd.read_csv(file_path, delimiter=';', low_memory=False)
 
 # Remove rows where 'port_name' is populated
 data = data[data['port_name'].isnull()]
@@ -17,8 +17,8 @@ data = data[data['port_name'].isnull()]
 times = data['time'].unique()
 
 # Grid dimensions and origin
-grid_size = (100, 100, 3)
-origin = (-24, -24)
+grid_size = (1000, 1000, 3)
+origin = (0, 0)
 
 # Initialize the grid
 grid = np.zeros(grid_size)
@@ -80,7 +80,7 @@ ani = animation.FuncAnimation(fig, update, frames=len(times), interval=100)
 
 print('Saving the animation')
 # Save the animation as a video file
-ani.save('SIR_animation.mp4', writer='ffmpeg', dpi=300)
+ani.save('SIR_animation_2.mp4', writer='ffmpeg', dpi=300)
 
 # If you want to display the animation inline (in a Jupyter notebook, for example), use:
 # from IPython.display import HTML
