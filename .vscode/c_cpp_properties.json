@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/include/opencv4"
+                "${CADMIUM}",
+                "${CADMIUM}/../json/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
