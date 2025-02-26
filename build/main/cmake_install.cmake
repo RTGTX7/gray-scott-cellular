@@ -1,4 +1,4 @@
-# Install script for directory: /home/sasi/cell-devs-example/main
+# Install script for directory: /home/sasisekhar/RA/cell-devs-example/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

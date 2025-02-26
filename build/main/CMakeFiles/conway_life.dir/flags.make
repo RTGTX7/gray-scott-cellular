@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/sasi/cell-devs-example/main/. -I/home/sasi/cell-devs-example/main/include -I/home/cadmium/rt_cadmium/include -I/home/cadmium/rt_cadmium/include/../json/include
+CXX_INCLUDES = -I/home/sasisekhar/RA/cell-devs-example/main/. -I/home/sasisekhar/RA/cell-devs-example/main/include -I/home/sasisekhar/cadmium_v2/include -I/home/sasisekhar/cadmium_v2/include/../json/include
 
 CXX_FLAGS = -std=gnu++2b
 

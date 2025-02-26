@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sasi/cell-devs-example
+CMAKE_SOURCE_DIR = /home/sasisekhar/RA/cell-devs-example
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sasi/cell-devs-example/build
+CMAKE_BINARY_DIR = /home/sasisekhar/RA/cell-devs-example/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -96,14 +96,14 @@ main/clean: main/CMakeFiles/conway_life.dir/clean
 main/CMakeFiles/conway_life.dir/all:
 	$(MAKE) $(MAKESILENT) -f main/CMakeFiles/conway_life.dir/build.make main/CMakeFiles/conway_life.dir/depend
 	$(MAKE) $(MAKESILENT) -f main/CMakeFiles/conway_life.dir/build.make main/CMakeFiles/conway_life.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/sasi/cell-devs-example/build/CMakeFiles --progress-num=1,2 "Built target conway_life"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/sasisekhar/RA/cell-devs-example/build/CMakeFiles --progress-num=1,2 "Built target conway_life"
 .PHONY : main/CMakeFiles/conway_life.dir/all
 
 # Build rule for subdir invocation for target.
 main/CMakeFiles/conway_life.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sasi/cell-devs-example/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sasisekhar/RA/cell-devs-example/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main/CMakeFiles/conway_life.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sasi/cell-devs-example/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sasisekhar/RA/cell-devs-example/build/CMakeFiles 0
 .PHONY : main/CMakeFiles/conway_life.dir/rule
 
 # Convenience name for target.
