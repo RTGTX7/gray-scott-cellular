@@ -12,8 +12,9 @@ using namespace cadmium::celldevs;
 //! Conway game of life cell.
 class conway : public GridCell<conwayState, double> {
 	public:
-	conway(const std::vector<int>& id, const std::shared_ptr<const GridCellConfig<conwayState, double>>& config):
-		GridCell<conwayState, double>(id, config) { }
+	conway(const std::vector<int>& id, 
+			const std::shared_ptr<const GridCellConfig<conwayState, double>>& config
+		  ): GridCell<conwayState, double>(id, config) { }
 
 	[[nodiscard]] conwayState localComputation(conwayState state,
 		const std::unordered_map<std::vector<int>, NeighborData<conwayState, double>>& neighborhood) const override {
@@ -25,6 +26,7 @@ class conway : public GridCell<conwayState, double> {
 			if(nState->life == true) {
 				live_neighbors++;
 			}
+
 		}
 
 		if(state.life == true) {
