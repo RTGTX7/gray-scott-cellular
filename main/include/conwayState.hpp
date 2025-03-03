@@ -12,15 +12,15 @@ struct conwayState {
 	conwayState() : life(false) {}
 };
 
-//! The simulator must be able to compare the equality of two state objects
-bool operator!=(const conwayState& x, const conwayState& y) {
-	return x.life != y.life;
-}
-
 //! It prints the life of the cell in an output stream.
 std::ostream& operator<<(std::ostream& os, const conwayState& x) {
 	os << "<" << ((x.life)? 1 : 0) << ">";
 	return os;
+}
+
+//! The simulator must be able to compare the equality of two state objects
+bool operator!=(const conwayState& x, const conwayState& y) {
+	return x.life != y.life;
 }
 
 //! It parses a JSON file and generates the corresponding conwayState object.
