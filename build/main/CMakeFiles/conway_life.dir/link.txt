@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/conway_life.dir/main_conway.cpp.o -o /home/sasisekhar/RA/cell-devs-example/bin/conway_life 
