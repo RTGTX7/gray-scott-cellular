@@ -12,7 +12,7 @@ using namespace cadmium::celldevs;
 std::shared_ptr<GridCell<conwayState, double>> addGridCell(const coordinates & cellId, const std::shared_ptr<const GridCellConfig<conwayState, double>>& cellConfig) {
 	auto cellModel = cellConfig->cellModel;
 
-	if (cellModel == "default" || cellModel == "conway") {
+	if (cellModel == "default") {
 		return std::make_shared<conway>(cellId, cellConfig);
 	} else {
 		throw std::bad_typeid();

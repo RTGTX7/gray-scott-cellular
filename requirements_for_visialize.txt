@@ -1,0 +1,5 @@
+you have to install:
+python3-virtualenv and ffmpeg
+
+then create a virtualenv, activate it, and install all dependencies.
+Finally, run the script

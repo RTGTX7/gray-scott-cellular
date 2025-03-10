@@ -7,9 +7,8 @@
   "cells": {
     "default": {
       "delay": "inertial",
-      "cell_type": "conway",
+      "cell_type": "blabla",
       "state": { "life": false },
-      "config": {},
       "neighborhood": [
         { "type": "moore", "range": 1 }
       ]

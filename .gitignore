@@ -1,3 +1,7 @@
 build
 bin
 .vscode
+*.mp4
+*.py
+*.csv
+requirements_for_visualize.txt
