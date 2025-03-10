@@ -8,11 +8,12 @@
 #include "include/conwayCell.hpp"
 
 using namespace cadmium::celldevs;
+using namespace cadmium;
 
 std::shared_ptr<GridCell<conwayState, double>> addGridCell(const coordinates & cellId, const std::shared_ptr<const GridCellConfig<conwayState, double>>& cellConfig) {
 	auto cellModel = cellConfig->cellModel;
 
-	if (cellModel == "default") {
+	if (cellModel == "default" || cellModel == "conway") {
 		return std::make_shared<conway>(cellId, cellConfig);
 	} else {
 		throw std::bad_typeid();
@@ -31,8 +32,8 @@ int main(int argc, char ** argv) {
 	auto model = std::make_shared<GridCellDEVSCoupled<conwayState, double>>("conway", addGridCell, configFilePath);
 	model->buildModel();
 	
-	auto rootCoordinator = cadmium::RootCoordinator(model);
-	rootCoordinator.setLogger<cadmium::CSVLogger>("grid_log.csv", ";");
+	auto rootCoordinator = RootCoordinator(model);
+	rootCoordinator.setLogger<CSVLogger>("grid_log.csv", ";");
 	
 	rootCoordinator.start();
 	rootCoordinator.simulate(simTime);
