@@ -38,7 +38,7 @@ NOTE: Everytime you run build.sh, the contents of build/ and bin/ will be replac
 To run the simulation, use:
 
 ```bash
-./bin/grayScottConfig.json <simulation_steps>
+./bin/gray-scott-cellular config/grayScottConfig.json <simulation_steps>
 ```
 
 Replace `<simulation_steps>` with the number of steps you wish to simulate.  
