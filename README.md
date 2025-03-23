@@ -45,7 +45,7 @@ Replace `<simulation_steps>` with the number of steps you wish to simulate.
 For example, to simulate 75 time steps:
 
 ```bash
-./bin/grayScottConfig.json 75
+./bin/gray-scott-cellular config/grayScottConfig.json 75
 ```
 
 You can increase the number (e.g., 100+) for full pattern emergence.
