@@ -1,0 +1,57 @@
+{
+  "scenario": {
+    "shape": [51, 51],
+    "origin": [0, 0],
+    "wrapped": true
+  },
+  "cells": {
+    "default": {
+      "delay": "inertial",
+      "model": "grayScott",
+      "state": {
+        "u": 1.0,
+        "v": 0.0,
+        "v_ratio": 0.0
+      },
+      "neighborhood": [
+        { "type": "moore", "range": 1 }
+      ]
+    },
+    "initial_condition": {
+      "state": {
+        "u": 0.5,
+        "v": 0.25,
+        "v_ratio": 0.8
+      },
+      "cell_map": [
+        [10, 10],
+        [20, 30],
+        [30, 20],
+        [40, 40],
+        [25, 15]
+      ]
+    }
+  },
+  "viewer": [
+    {
+      "colors": [[255, 255, 255], [0, 0, 0]],
+      "breaks": [0, 0.5, 1],
+      "field": "u"
+    },
+    {
+      "colors": [[255, 255, 255], [0, 0, 0]],
+      "breaks": [0, 0.5, 1],
+      "field": "v"
+    },
+    {
+      "colors": [
+        [240, 240, 240],
+        [255, 100, 100],
+        [200, 0, 0],
+        [0, 0, 0]
+      ],
+      "breaks": [0, 0.2, 0.5, 1],
+      "field": "v_ratio"
+    }
+  ]
+}
