@@ -14,7 +14,7 @@ struct grayScottState {
 
 //! Output u and v to the output stream
 std::ostream& operator<<(std::ostream& os, const grayScottState& x) {
-    os << "<" << x.u << ", " << x.v << ">";
+    os << "<" << x.v_ratio <<">";//", " << x.v_ratio <<
     return os;
 }
 
@@ -27,6 +27,7 @@ bool operator!=(const grayScottState& x, const grayScottState& y) {
 void from_json(const nlohmann::json& j, grayScottState& s) {
     j.at("u").get_to(s.u);
     j.at("v").get_to(s.v);
+    j.at("v_ratio").get_to(s.v_ratio);
     // v_ratio will be updated during computation, so it does not need to be initialized from JSON
 }
 

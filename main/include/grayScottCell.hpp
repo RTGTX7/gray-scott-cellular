@@ -16,9 +16,6 @@ using namespace cadmium::celldevs;
  */
 class grayScott : public GridCell<grayScottState, double> {
 public:
-    /// Precision used when printing debug log values (number of decimal places).
-    int output_precision;
-
     /**
      * @brief Constructor for the Gray-Scott cell.
      * @param id The coordinates of this cell in the grid.
@@ -27,23 +24,9 @@ public:
     grayScott(const std::vector<int>& id,
               const std::shared_ptr<const GridCellConfig<grayScottState, double>>& config)
         : GridCell<grayScottState, double>(id, config),
-          cell_id(id),
-          step_count(0),
-          log_threshold(10000000),  // Default log printing frequency
-          output_precision(2) {     // Default log precision
-
-        // TODO: Optionally allow reading output_precision from JSON config
-        // Example:
-        // if (config->parameters.contains("output_precision")) {
-        //     output_precision = config->parameters["output_precision"].get<int>();
-        // }
+          cell_id(id)
+    {
     }
-
-    /// Tracks how many update steps have occurred (mutable for logging)
-    mutable int step_count;
-
-    /// Number of steps between console log outputs
-    const int log_threshold;
 
     /**
      * @brief Local computation logic for each simulation step.
@@ -60,14 +43,14 @@ public:
         //-------------------------
         // 1. Reaction-diffusion parameters
         //-------------------------
-        double f = 0.5;   // Feed rate
-        double k = 0.32;   // Kill rate
+        double f = 0.055;   // Feed rate
+        double k = 0.117;   // Kill rate
         double r = 1.0;    // Reaction rate constant
 
-        double dA = 0.2;   // Diffusion rate of chemical A (u)
-        double dB = 0.1;   // Diffusion rate of chemical B (v)
+        double dA = 1;     // Diffusion rate of chemical A (u)
+        double dB = 0.5;   // Diffusion rate of chemical B (v)
 
-        constexpr double dt = 2.0;  // Simulation time step
+        constexpr double dt = 1;  // Simulation time step
 
         //-------------------------
         // 2. Calculate Laplacian (diffusion) using weighted 3x3 kernel
@@ -121,19 +104,14 @@ public:
         // 5. Calculate v_ratio = v / (u + v), avoid division by zero
         //-------------------------
         double sum_uv = state.u + state.v;
-        state.v_ratio = (sum_uv > 0.0) ? (state.v / sum_uv) : 0.5;
-
-        //-------------------------
-        // 6. Optional logging for debugging
-        //-------------------------
-        step_count++;
-        if (step_count % log_threshold == 0) {
-            std::cout << std::fixed << std::setprecision(output_precision);
-            std::cout << "Step " << step_count
-                      << " - u: " << state.u
-                      << ", v: " << state.v
-                      << ", v_ratio: " << state.v_ratio
-                      << std::endl;
+        
+        if (sum_uv > 0.0) {
+            state.v_ratio = state.v / sum_uv;
+        } else {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<> dis(0.0, 1.0);
+            state.v_ratio = dis(gen);
         }
 
         return state;
