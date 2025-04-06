@@ -38,14 +38,14 @@ NOTE: Everytime you run build.sh, the contents of build/ and bin/ will be replac
 To run the simulation, use:
 
 ```bash
-./bin/grayScottConfig.json <simulation_steps>
+./bin/gray-scott-cellular config/grayScottConfig.json <simulation_steps>
 ```
 
 Replace `<simulation_steps>` with the number of steps you wish to simulate.  
 For example, to simulate 75 time steps:
 
 ```bash
-./bin/grayScottConfig.json 75
+./bin/gray-scott-cellular config/grayScottConfig.json 75
 ```
 
 You can increase the number (e.g., 100+) for full pattern emergence.
@@ -66,7 +66,25 @@ This file defines:
 - Visualization fields and color mappings
 
 ---
+### `main.cpp`
+Entry point of the simulation; initializes and launches the Cell-DEVS model using Cadmium.
 
-## Output
+### `grayScottCell.hpp`
+Defines the behavior of each cell in the grid, including local computation based on the Gray-Scott reaction-diffusion equations.
 
-Simulation outputs include the evolving concentrations of `u`, `v`, and `v_ratio`, and can be visualized using tools such as DEVS viewer.
+### `grayScottState.hpp`
+Defines the internal state of each cell, including concentrations `u`, `v`, and the derived `v_ratio`.
+
+---
+
+## 🧪 Execution Output
+
+The simulation generates an output file:
+
+- `grid_log.csv` — Contains the time evolution of cell states across the grid.
+
+To visualize the simulation results:
+
+➡️ **Open both** `config/grayScottConfig.json` **and** `grid_log.csv` **in the DEVS Viewer**.
+
+This will allow you to view the dynamic pattern formation over time as computed by the Gray-Scott model.
