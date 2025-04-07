@@ -42,7 +42,7 @@ To run the simulation, use:
 ```
 
 Replace `<simulation_steps>` with the number of steps you wish to simulate.  
-For example, to simulate 75 time steps:
+For example, to simulate 1000 time steps:
 
 ```bash
 ./bin/gray-scott-cellular config/AbigdotConfig.json 1000
