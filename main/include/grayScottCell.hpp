@@ -8,6 +8,11 @@
 #include <cadmium/modeling/celldevs/grid/config.hpp>
 #include "grayScottState.hpp"
 
+// ✅ 1. 引入 OpenMP 头文件
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 using namespace cadmium::celldevs;
 
 /**
@@ -16,9 +21,6 @@ using namespace cadmium::celldevs;
  */
 class grayScott : public GridCell<grayScottState, double> {
 public:
-    /// Precision used when printing debug log values (number of decimal places).
-    int output_precision;
-
     /**
      * @brief Constructor for the Gray-Scott cell.
      * @param id The coordinates of this cell in the grid.
@@ -27,23 +29,9 @@ public:
     grayScott(const std::vector<int>& id,
               const std::shared_ptr<const GridCellConfig<grayScottState, double>>& config)
         : GridCell<grayScottState, double>(id, config),
-          cell_id(id),
-          step_count(0),
-          log_threshold(10000000),  // Default log printing frequency
-          output_precision(2) {     // Default log precision
-
-        // TODO: Optionally allow reading output_precision from JSON config
-        // Example:
-        // if (config->parameters.contains("output_precision")) {
-        //     output_precision = config->parameters["output_precision"].get<int>();
-        // }
+          cell_id(id)
+    {
     }
-
-    /// Tracks how many update steps have occurred (mutable for logging)
-    mutable int step_count;
-
-    /// Number of steps between console log outputs
-    const int log_threshold;
 
     /**
      * @brief Local computation logic for each simulation step.
@@ -56,30 +44,34 @@ public:
         grayScottState state,
         const std::unordered_map<std::vector<int>, NeighborData<grayScottState, double>>& neighborhood
     ) const override {
-        
+
         //-------------------------
         // 1. Reaction-diffusion parameters
         //-------------------------
-        double f = 0.5;   // Feed rate
-        double k = 0.32;   // Kill rate
-        double r = 1.0;    // Reaction rate constant
-
-        double dA = 0.2;   // Diffusion rate of chemical A (u)
-        double dB = 0.1;   // Diffusion rate of chemical B (v)
-
-        constexpr double dt = 2.0;  // Simulation time step
+        double f = 0.042;   // Feed rate
+        double k = 0.101;   // Kill rate
+        double r = 1.0;     // Reaction rate constant
+        double dA = 0.195;      // Diffusion rate of chemical A (u)
+        double dB = 0.1;    // Diffusion rate of chemical B (v)
+        constexpr double dt = 1;  // Simulation time step
 
         //-------------------------
         // 2. Calculate Laplacian (diffusion) using weighted 3x3 kernel
-        // Kernel:
-        // [[0.05, 0.2, 0.05],
-        //  [0.2 , -1 , 0.2 ],
-        //  [0.05, 0.2, 0.05]]
         //-------------------------
         double laplacian_u = 0.0;
         double laplacian_v = 0.0;
 
-        for (const auto& [neighborId, neighborData] : neighborhood) {
+        //  neighborhood to vector
+        std::vector<std::pair<std::vector<int>, NeighborData<grayScottState, double>>> neighVec;
+        neighVec.reserve(neighborhood.size());
+        for (auto &kv : neighborhood) {
+            neighVec.push_back(kv);
+        }
+
+        // use OpenMP loop + reduction
+        #pragma omp parallel for reduction(+:laplacian_u, laplacian_v)
+        for (int i = 0; i < static_cast<int>(neighVec.size()); i++) {
+            auto& [neighborId, neighborData] = neighVec[i];
             int dx = neighborId[0] - cell_id[0];
             int dy = neighborId[1] - cell_id[1];
             double weight = 0.0;
@@ -87,7 +79,7 @@ public:
             if (std::abs(dx) == 1 && std::abs(dy) == 1) {
                 weight = 0.05;  // Diagonal neighbors
             } else if ((std::abs(dx) == 1 && dy == 0) || (std::abs(dy) == 1 && dx == 0)) {
-                weight = 0.2;   // Direct neighbors (up/down/left/right)
+                weight = 0.2;   // Direct neighbors
             }
 
             laplacian_u += weight * neighborData.state->u;
@@ -95,19 +87,17 @@ public:
         }
 
         // Subtract central cell contribution
-        laplacian_u += -1.0 * state.u;
-        laplacian_v += -1.0 * state.v;
+        laplacian_u -= state.u;
+        laplacian_v -= state.v;
 
         //-------------------------
         // 3. Compute reaction and diffusion terms
         //-------------------------
         double du_diff = dA * laplacian_u;
         double dv_diff = dB * laplacian_v;
-
         double feed_term = f * (1.0 - state.u);
         double kill_term = k * state.v;
         double reaction_term = r * state.u * state.v * state.v;
-
         double du_dt = du_diff + feed_term - reaction_term;
         double dv_dt = dv_diff - kill_term + reaction_term;
 
@@ -121,19 +111,13 @@ public:
         // 5. Calculate v_ratio = v / (u + v), avoid division by zero
         //-------------------------
         double sum_uv = state.u + state.v;
-        state.v_ratio = (sum_uv > 0.0) ? (state.v / sum_uv) : 0.5;
-
-        //-------------------------
-        // 6. Optional logging for debugging
-        //-------------------------
-        step_count++;
-        if (step_count % log_threshold == 0) {
-            std::cout << std::fixed << std::setprecision(output_precision);
-            std::cout << "Step " << step_count
-                      << " - u: " << state.u
-                      << ", v: " << state.v
-                      << ", v_ratio: " << state.v_ratio
-                      << std::endl;
+        if (sum_uv > 0.0) {
+            state.v_ratio = state.v / sum_uv;
+        } else {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<> dis(0.0, 1.0);
+            state.v_ratio = dis(gen);
         }
 
         return state;
