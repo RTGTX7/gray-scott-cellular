@@ -38,17 +38,17 @@ NOTE: Everytime you run build.sh, the contents of build/ and bin/ will be replac
 To run the simulation, use:
 
 ```bash
-./bin/gray-scott-cellular config/grayScottConfig.json <simulation_steps>
+./bin/gray-scott-cellular config/AbigdotConfig.json <simulation_steps>
 ```
 
 Replace `<simulation_steps>` with the number of steps you wish to simulate.  
 For example, to simulate 75 time steps:
 
 ```bash
-./bin/gray-scott-cellular config/grayScottConfig.json 75
+./bin/gray-scott-cellular config/AbigdotConfig.json 1000
 ```
 
-You can increase the number (e.g., 100+) for full pattern emergence.
+You can increase the number (e.g., 500+) for full pattern emergence.
 
 ---
 
