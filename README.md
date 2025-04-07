@@ -18,7 +18,7 @@ For a full explanation of the Gray-Scott model and its Cell-DEVS mapping, refer 
 
 ## Dependencies
 
-This project assumes you have **Cadmium** installed and accessible via the environment variable `$CADMIUM`.
+This project has already included **Cadmium** installed and accessible via the environment variable `$CADMIUM`.
 
 > ✅ **Note:** If you are using the DEVSsim server, you can skip this step — all required dependencies are pre-installed.
 
