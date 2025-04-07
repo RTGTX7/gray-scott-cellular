@@ -37,7 +37,7 @@ public:
         const double mu    = 0.2;
         const double pho   = 1.5;
         const double delta = 100.0;
-        const double p     = 0.01;
+        const double p     = 0.15;
         const double beta  = 3.0;
         const double dt    = 0.0005;  // Cadmium time-step
         // Physical grid spacing: length=128 over n=256 cells => dx=0.5
