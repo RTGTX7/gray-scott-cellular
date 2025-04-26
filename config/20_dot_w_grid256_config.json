@@ -14,7 +14,7 @@
           "v_ratio": 0.0
         },
         "neighborhood": [
-          { "type": "vonNeumann", "range": 1 }
+          { "type": "moore", "range": 1 }
         ]
       },
       "initial_condition": {
